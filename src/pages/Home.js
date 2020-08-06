@@ -1,24 +1,25 @@
 import React from "react";
 import { Cards, DataTable } from "../component";
 import { Container, Typography } from "@material-ui/core";
-import { globalData } from "../api";
+import { globalData, caseByCountry } from "../api";
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {},
+      globalData: {},
+      countryCase: [],
     };
   }
 
   async componentDidMount() {
-    const result = await globalData();
-    this.setState({ data: result });
+    const globalCase = await globalData();
+    const { data } = await caseByCountry();
+    this.setState({ globalData: globalCase, countryCase: data });
   }
 
   render() {
-    const { data } = this.state;
-    console.log(data);
+    const { globalData, countryCase } = this.state;
     return (
       <Container maxWidth="md">
         <Typography variant="h3" gutterBottom>
@@ -27,8 +28,8 @@ export default class Home extends React.Component {
         <Typography variant="body1" color="textSecondary" gutterBottom>
           Laporan kasus penyebaran covid-19 di seluruh dunia
         </Typography>
-        <Cards data={data} />
-        <DataTable />
+        <Cards data={globalData} />
+        <DataTable data={countryCase} />
       </Container>
     );
   }

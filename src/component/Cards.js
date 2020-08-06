@@ -32,29 +32,78 @@ const useStyle = makeStyles(() => ({
 }));
 
 export default function Cards({
-  data: { total_cases, total_recovered, total_unresolved, total_deaths },
+  data: {
+    cases,
+    recovered,
+    deaths,
+    todayCases,
+    todayDeaths,
+    todayRecovered,
+    active,
+    updated,
+  },
 }) {
   const classes = useStyle();
 
   return (
     <Grid container spacing={3} style={{ marginTop: "1rem" }}>
       <Grid item xs={12} md={6}>
-        <Card className={classes.confirmed}>
+        <Card className={classes.confirmed} elevation={0}>
           <CardContent>
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-              {total_cases === undefined ? (
+              {cases === undefined ? (
                 <Skeleton variant="text" />
               ) : (
                 "Konfirmasi kasus"
               )}
             </Typography>
-            <Typography variant="h5" className={classes.cardFont} gutterBottom>
-              {total_cases === undefined ? (
+            <Typography variant="h5" className={classes.cardFont}>
+              {cases === undefined ? (
                 <Skeleton variant="text" />
               ) : (
                 <CountUp
                   start={0}
-                  end={total_cases}
+                  end={cases}
+                  separator={","}
+                  duration={2}
+                  suffix=" orang"
+                />
+              )}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              className={classes.cardFont}
+              color="textSecondary"
+            >
+              {todayCases === undefined ? (
+                <Skeleton variant="text" />
+              ) : (
+                <CountUp
+                  start={0}
+                  end={todayCases}
+                  separator={","}
+                  duration={2}
+                  prefix="+ "
+                  suffix=" kasus"
+                />
+              )}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Card className={classes.active} elevation={0}>
+          <CardContent>
+            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+              {active === undefined ? <Skeleton variant="text" /> : "Dirawat"}
+            </Typography>
+            <Typography variant="h5" className={classes.cardFont} gutterBottom>
+              {active === undefined ? (
+                <Skeleton variant="text" />
+              ) : (
+                <CountUp
+                  start={0}
+                  end={active}
                   separator={","}
                   duration={2}
                   suffix=" orang"
@@ -65,51 +114,43 @@ export default function Cards({
         </Card>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Card className={classes.active}>
+        <Card className={classes.recovered} elevation={0}>
           <CardContent>
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-              {total_unresolved === undefined ? (
-                <Skeleton variant="text" />
-              ) : (
-                "Dirawat"
-              )}
-            </Typography>
-            <Typography variant="h5" className={classes.cardFont} gutterBottom>
-              {total_unresolved === undefined ? (
-                <Skeleton variant="text" />
-              ) : (
-                <CountUp
-                  start={0}
-                  end={total_unresolved}
-                  separator={","}
-                  duration={2}
-                  suffix=" orang"
-                />
-              )}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card className={classes.recovered}>
-          <CardContent>
-            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-              {total_recovered === undefined ? (
+              {recovered === undefined ? (
                 <Skeleton variant="text" />
               ) : (
                 "Pasien sembuh"
               )}
             </Typography>
-            <Typography variant="h5" className={classes.cardFont} gutterBottom>
-              {total_recovered === undefined ? (
+            <Typography variant="h5" className={classes.cardFont}>
+              {recovered === undefined ? (
                 <Skeleton variant="text" />
               ) : (
                 <CountUp
                   start={0}
-                  end={total_recovered}
+                  end={recovered}
                   separator={","}
                   duration={2}
                   suffix=" orang"
+                />
+              )}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              className={classes.cardFont}
+              color="textSecondary"
+            >
+              {todayRecovered === undefined ? (
+                <Skeleton variant="text" />
+              ) : (
+                <CountUp
+                  start={0}
+                  end={todayRecovered}
+                  separator={","}
+                  duration={2}
+                  prefix="+ "
+                  suffix=" kasus"
                 />
               )}
             </Typography>
@@ -117,30 +158,49 @@ export default function Cards({
         </Card>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Card className={classes.death}>
+        <Card className={classes.death} elevation={0}>
           <CardContent>
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-              {total_deaths === undefined ? (
-                <Skeleton variant="text" />
-              ) : (
-                "Meninggal"
-              )}
+              {deaths === undefined ? <Skeleton variant="text" /> : "Meninggal"}
             </Typography>
-            <Typography variant="h5" className={classes.cardFont} gutterBottom>
-              {total_deaths === undefined ? (
+            <Typography variant="h5" className={classes.cardFont}>
+              {deaths === undefined ? (
                 <Skeleton variant="text" />
               ) : (
                 <CountUp
                   start={0}
-                  end={total_deaths}
+                  end={deaths}
                   separator=","
                   duration={2}
                   suffix=" orang"
                 />
               )}
             </Typography>
+            <Typography
+              variant="subtitle1"
+              className={classes.cardFont}
+              color="textSecondary"
+            >
+              {todayDeaths === undefined ? (
+                <Skeleton variant="text" />
+              ) : (
+                <CountUp
+                  start={0}
+                  end={todayDeaths}
+                  separator={","}
+                  duration={2}
+                  prefix="+ "
+                  suffix=" kasus"
+                />
+              )}
+            </Typography>
           </CardContent>
         </Card>
+      </Grid>
+      <Grid item>
+        <Typography variant="caption" color="textSecondary" align="center">
+          {new Date(updated).toString()}
+        </Typography>
       </Grid>
     </Grid>
   );
