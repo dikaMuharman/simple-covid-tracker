@@ -33,14 +33,13 @@ export default function DataTable({ data }) {
         <TableHead>
           <TableRow>
             <TableCell>Negara</TableCell>
-            <TableCell align="right">Total case</TableCell>
-            <TableCell align="right" style={{ padding: "0 8px" }}>
-              New cases
-            </TableCell>
-            <TableCell align="right">Deaths</TableCell>
-            <TableCell align="right">New Deaths</TableCell>
-            <TableCell align="right">Recovery</TableCell>
-            <TableCell align="right">New recovery</TableCell>
+            <TableCell>Total case</TableCell>
+            <TableCell style={{ padding: "0 8px" }}>New cases</TableCell>
+            <TableCell>Deaths</TableCell>
+            <TableCell>New Deaths</TableCell>
+            <TableCell>Recovery</TableCell>
+            <TableCell>New recovery</TableCell>
+            <TableCell>Active Case</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -51,7 +50,7 @@ export default function DataTable({ data }) {
                   {row.country}
                 </Link>
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 <NumberFormat
                   value={row.cases}
                   thousandSeparator={true}
@@ -59,7 +58,6 @@ export default function DataTable({ data }) {
                 />
               </TableCell>
               <TableCell
-                align="right"
                 className={row.todayCases !== 0 ? classes.confirmed : ""}
               >
                 {row.todayCases !== 0 ? (
@@ -82,7 +80,7 @@ export default function DataTable({ data }) {
                   " "
                 )}
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 <NumberFormat
                   value={row.deaths}
                   thousandSeparator={true}
@@ -90,7 +88,6 @@ export default function DataTable({ data }) {
                 />
               </TableCell>
               <TableCell
-                align="right"
                 className={row.todayDeaths !== 0 ? classes.deaths : ""}
               >
                 {row.todayDeaths !== 0 ? (
@@ -104,7 +101,7 @@ export default function DataTable({ data }) {
                   " "
                 )}
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 {row.recovered !== 0 ? (
                   <NumberFormat
                     value={row.recovered}
@@ -116,7 +113,6 @@ export default function DataTable({ data }) {
                 )}
               </TableCell>
               <TableCell
-                align="right"
                 className={row.todayRecovered !== 0 ? classes.recovered : ""}
               >
                 {row.todayRecovered !== 0 ? (
@@ -125,6 +121,17 @@ export default function DataTable({ data }) {
                     thousandSeparator={true}
                     displayType="text"
                     prefix="+ "
+                  />
+                ) : (
+                  " "
+                )}
+              </TableCell>
+              <TableCell>
+                {row.active !== 0 ? (
+                  <NumberFormat
+                    value={row.active}
+                    thousandSeparator={true}
+                    displayType="text"
                   />
                 ) : (
                   " "

@@ -24,7 +24,6 @@ export default class Home extends React.Component {
 
   render() {
     const { globalData, countryCase } = this.state;
-    console.log(globalData);
 
     return (
       <Container maxWidth="md">
