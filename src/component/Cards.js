@@ -3,7 +3,7 @@ import { Grid, Card, CardContent, Typography } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { makeStyles } from "@material-ui/styles";
 import { grey, amber, green, red } from "@material-ui/core/colors";
-import CountUp from "react-countup";
+import NumberFormat from "react-number-format";
 
 const useStyle = makeStyles(() => ({
   cardFont: {
@@ -31,8 +31,9 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-export default function Cards({
-  data: {
+export default function Cards({ data }) {
+  const classes = useStyle();
+  const {
     cases,
     recovered,
     deaths,
@@ -41,9 +42,7 @@ export default function Cards({
     todayRecovered,
     active,
     updated,
-  },
-}) {
-  const classes = useStyle();
+  } = data;
 
   return (
     <Grid container spacing={3} style={{ marginTop: "1rem" }}>
@@ -61,11 +60,10 @@ export default function Cards({
               {cases === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={cases}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={cases}
+                  thousandSeparator={true}
+                  displayType="text"
                   suffix=" orang"
                 />
               )}
@@ -78,13 +76,12 @@ export default function Cards({
               {todayCases === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={todayCases}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={todayCases}
+                  thousandSeparator={true}
+                  displayType="text"
                   prefix="+ "
-                  suffix=" kasus"
+                  suffix=" orang"
                 />
               )}
             </Typography>
@@ -101,11 +98,10 @@ export default function Cards({
               {active === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={active}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={active}
+                  thousandSeparator={true}
+                  displayType="text"
                   suffix=" orang"
                 />
               )}
@@ -127,11 +123,10 @@ export default function Cards({
               {recovered === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={recovered}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={recovered}
+                  thousandSeparator={true}
+                  displayType="text"
                   suffix=" orang"
                 />
               )}
@@ -144,13 +139,12 @@ export default function Cards({
               {todayRecovered === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={todayRecovered}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={todayRecovered}
+                  thousandSeparator={true}
+                  displayType="text"
                   prefix="+ "
-                  suffix=" kasus"
+                  suffix=" orang"
                 />
               )}
             </Typography>
@@ -167,11 +161,10 @@ export default function Cards({
               {deaths === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={deaths}
-                  separator=","
-                  duration={2}
+                <NumberFormat
+                  value={deaths}
+                  thousandSeparator={true}
+                  displayType="text"
                   suffix=" orang"
                 />
               )}
@@ -184,13 +177,12 @@ export default function Cards({
               {todayDeaths === undefined ? (
                 <Skeleton variant="text" />
               ) : (
-                <CountUp
-                  start={0}
-                  end={todayDeaths}
-                  separator={","}
-                  duration={2}
+                <NumberFormat
+                  value={todayDeaths}
+                  thousandSeparator={true}
+                  displayType="text"
                   prefix="+ "
-                  suffix=" kasus"
+                  suffix=" orang"
                 />
               )}
             </Typography>

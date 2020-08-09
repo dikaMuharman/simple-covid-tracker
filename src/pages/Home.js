@@ -12,14 +12,20 @@ export default class Home extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async fetchData() {
     const globalCase = await globalData();
     const { data } = await caseByCountry();
     this.setState({ globalData: globalCase, countryCase: data });
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
     const { globalData, countryCase } = this.state;
+    console.log(globalData);
+
     return (
       <Container maxWidth="md">
         <Typography variant="h3" gutterBottom>

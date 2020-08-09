@@ -1,8 +1,12 @@
 import axios from "axios";
 const url = "https://disease.sh/v3/covid-19/";
 
-export const globalData = async () => {
+export const globalData = async (countries) => {
   try {
+    let changeAbleUrl = `${url}all?yesterday=false&allowNull=true`;
+    if (countries)
+      changeAbleUrl = `${url}countries/${countries}?yesterday=false`;
+
     const {
       data: {
         cases,
@@ -14,7 +18,7 @@ export const globalData = async () => {
         active,
         updated,
       },
-    } = await axios.get(`${url}all?yesterday=false&allowNull=true`);
+    } = await axios.get(changeAbleUrl);
     // console.log(cases);
     return {
       cases,

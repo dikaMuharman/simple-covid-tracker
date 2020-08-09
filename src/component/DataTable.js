@@ -8,7 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import NumberFormat from "react-number-format";
+import Typography from "@material-ui/core/Typography";
 import { green, red, amber } from "@material-ui/core/colors";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   recovered: {
@@ -27,12 +29,14 @@ export default function DataTable({ data }) {
 
   return (
     <TableContainer component={Paper} elevation={0}>
-      <Table stickyHeader className={classes.table} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Negara</TableCell>
             <TableCell align="right">Total case</TableCell>
-            <TableCell align="right">New case</TableCell>
+            <TableCell align="right" style={{ padding: "0 8px" }}>
+              New cases
+            </TableCell>
             <TableCell align="right">Deaths</TableCell>
             <TableCell align="right">New Deaths</TableCell>
             <TableCell align="right">Recovery</TableCell>
@@ -40,10 +44,12 @@ export default function DataTable({ data }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow hover={true} key={row.countryInfo._id}>
+          {data.map((row, i) => (
+            <TableRow hover={true} key={i}>
               <TableCell component="th" scope="row">
-                {row.country}
+                <Link to={`/detail/${row.countryInfo.iso2}`}>
+                  {row.country}
+                </Link>
               </TableCell>
               <TableCell align="right">
                 <NumberFormat
@@ -54,14 +60,23 @@ export default function DataTable({ data }) {
               </TableCell>
               <TableCell
                 align="right"
-                className={row.todayCases != 0 ? classes.confirmed : []}
+                className={row.todayCases !== 0 ? classes.confirmed : ""}
               >
-                {row.todayCases != 0 ? (
+                {row.todayCases !== 0 ? (
                   <NumberFormat
                     value={row.todayCases}
                     thousandSeparator={true}
                     displayType="text"
                     prefix="+ "
+                    renderText={(value) => (
+                      <Typography
+                        variant="body2"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
+                        {value}
+                      </Typography>
+                    )}
+                    // style={{ whiteSpace: "nowrap" }}
                   />
                 ) : (
                   " "
@@ -76,11 +91,11 @@ export default function DataTable({ data }) {
               </TableCell>
               <TableCell
                 align="right"
-                className={row.todayDeaths != 0 ? classes.deaths : []}
+                className={row.todayDeaths !== 0 ? classes.deaths : ""}
               >
-                {row.todayDeaths != 0 ? (
+                {row.todayDeaths !== 0 ? (
                   <NumberFormat
-                    value={row.todayCases}
+                    value={row.todayDeaths}
                     thousandSeparator={true}
                     displayType="text"
                     prefix="+ "
@@ -90,19 +105,23 @@ export default function DataTable({ data }) {
                 )}
               </TableCell>
               <TableCell align="right">
-                <NumberFormat
-                  value={row.recovered}
-                  thousandSeparator={true}
-                  displayType="text"
-                />
+                {row.recovered !== 0 ? (
+                  <NumberFormat
+                    value={row.recovered}
+                    thousandSeparator={true}
+                    displayType="text"
+                  />
+                ) : (
+                  <Typography>N/A</Typography>
+                )}
               </TableCell>
               <TableCell
                 align="right"
-                className={row.todayRecovered != 0 ? classes.recovered : []}
+                className={row.todayRecovered !== 0 ? classes.recovered : ""}
               >
-                {row.todayRecovered != 0 ? (
+                {row.todayRecovered !== 0 ? (
                   <NumberFormat
-                    value={row.todayCases}
+                    value={row.todayRecovered}
                     thousandSeparator={true}
                     displayType="text"
                     prefix="+ "
